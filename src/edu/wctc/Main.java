@@ -1,5 +1,6 @@
 package edu.wctc;
 
+import java.time.MonthDay;
 import java.util.Scanner;
 //project implements commons-codec-1.15.jar
 //project implements commons-validator-1.7.jar
@@ -16,20 +17,41 @@ public class Main {
         System.out.println("Enter a last name");
         String lastName = scanner.nextLine();
         System.out.println("Enter your birth year in four digits.");
-        Integer birthYear = Integer.valueOf(scanner.nextLine());
+        int birthYear = Integer.parseInt(scanner.nextLine());
         System.out.println("Enter your birth month in two digits.");
-        Integer birthMonth = Integer.valueOf(scanner.nextLine());
+        int birthMonth = Integer.parseInt(scanner.nextLine());
         System.out.println("Enter the day of your birth in two digits.");
-        Integer birthDate = Integer.valueOf(scanner.nextLine());
+        int birthDate = Integer.parseInt(scanner.nextLine());
         System.out.println("Enter your gender (M or F)");
         char genderCode = scanner.nextLine().charAt(0);
+        int overflow = 0;
+
+        DriversLicense dl = new DriversLicense();
+        LastNameUtility lnu = new LastNameUtility();
+        MonthDayGenderUtility mdgu = new MonthDayGenderUtility();
+        FirstNameUtility fnu = new FirstNameUtility();
+        WisconsinFormatter wf = new WisconsinFormatter();
+        FloridaFormatter ff = new FloridaFormatter();
 
         try {
             //try logic
-            DriversLicense dl = new DriversLicense();
+
+
+            //set methods here -stores in dl, then formatters get values to return dl number.
+            //last name only encoded by soundex
+
+            dl.setSoundexCode(lnu.encodeLastName(lastName));
+            dl.setBirthMonthDayGender(mdgu.encodeMonthDayGender(birthYear, birthMonth, birthDate, genderCode));
+            dl.setFirstNameMiddleInitial(fnu.encodeFirstName(firstName, middleInitial));
+            dl.setBirthYear(birthYear);
+            dl.setOverflow(overflow);
+
 
         } catch (Exception e) {
 
         }
+        System.out.println("Wisconsin Drivers License Number: " + wf.formatLicenseNumber(dl));
+        System.out.println("Florida Drivers License Number: " + ff.formatLicenseNumber(dl));
+
     }
 }
