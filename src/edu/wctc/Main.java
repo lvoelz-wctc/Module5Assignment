@@ -16,11 +16,11 @@ public class Main {
         String middleInitial = scanner.nextLine();
         System.out.println("Enter a last name");
         String lastName = scanner.nextLine();
-        System.out.println("Enter your birth year in four digits.");
+        System.out.println("Enter the last two digits of your birth year.");
         int birthYear = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter your birth month in two digits.");
+        System.out.println("Enter your birth month.");
         int birthMonth = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter the day of your birth in two digits.");
+        System.out.println("Enter the day of your birth.");
         int birthDate = Integer.parseInt(scanner.nextLine());
         System.out.println("Enter your gender (M or F)");
         char genderCode = scanner.nextLine().charAt(0);
@@ -34,11 +34,6 @@ public class Main {
         FloridaFormatter ff = new FloridaFormatter();
 
         try {
-            //try logic
-
-
-            //set methods here -stores in dl, then formatters get values to return dl number.
-            //last name only encoded by soundex
 
             dl.setSoundexCode(lnu.encodeLastName(lastName));
             dl.setBirthMonthDayGender(mdgu.encodeMonthDayGender(birthYear, birthMonth, birthDate, genderCode));
@@ -46,12 +41,13 @@ public class Main {
             dl.setBirthYear(birthYear);
             dl.setOverflow(overflow);
 
+            System.out.println("Wisconsin Drivers License Number: " + wf.formatLicenseNumber(dl));
+            System.out.println("Florida Drivers License Number: " + ff.formatLicenseNumber(dl));
 
-        } catch (Exception e) {
-
+        } catch (MissingNameException | InvalidBirthdayException | UnknownGenderCodeException e) {
+            e.printStackTrace();
         }
-        System.out.println("Wisconsin Drivers License Number: " + wf.formatLicenseNumber(dl));
-        System.out.println("Florida Drivers License Number: " + ff.formatLicenseNumber(dl));
+        //after the exception block;
 
     }
 }

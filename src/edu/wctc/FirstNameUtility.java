@@ -15,9 +15,9 @@ public class FirstNameUtility {
         middleInitialCodeMap.put("Z", 19);}
 
         public int encodeFirstName(String firstName, String middleInitial) throws MissingNameException {
-        String firstInitial = String.valueOf(firstName.charAt(0));
 
-        if (firstName == null){
+
+        if (firstName.isBlank()){
             throw new MissingNameException();
         }
 
@@ -25,10 +25,12 @@ public class FirstNameUtility {
             return ((firstNameCodeMap.get(firstName) + middleInitialCodeMap.get(middleInitial))); // sum of firstName value + middleInitial value
         }
         else if (!firstNameCodeMap.containsKey(firstName)) {
+            String firstInitial = String.valueOf(firstName.charAt(0));
             return ((middleInitialCodeMap.get(firstInitial) + middleInitialCodeMap.get(middleInitial)));
         }
 
-        else {  //if (middleInitial == null)?
+        else {
+            String firstInitial = String.valueOf(firstName.charAt(0));
             return middleInitialCodeMap.get(firstInitial);
         }
         }

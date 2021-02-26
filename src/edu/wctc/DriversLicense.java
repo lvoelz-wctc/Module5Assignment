@@ -5,7 +5,7 @@ public class DriversLicense {
     private int firstNameMiddleInitial;
     private int birthYear;
     private int birthMonthDayGender;
-    private int overflow;
+    private int overflow = 0;
 
     public String getSoundexCode(){
         return soundexCode;

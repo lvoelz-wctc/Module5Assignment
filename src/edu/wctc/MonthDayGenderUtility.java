@@ -12,18 +12,34 @@ public class MonthDayGenderUtility {
     private final char CODE_MALE = 'M';
     private final char CODE_FEMALE = 'F';
 
-    public int encodeMonthDayGender(int year, int month, int day, char genderCode) throws UnknownGenderCodeException, InvalidBirthdayException{
-        String yearString = Integer.toString(year);
-        String monthString = Integer.toString(month);
-        String dayString = Integer.toString(day);
+    public boolean validDate(int month, int day, int year) {
+        if (month > 12 || month < 1) {
+            return false;
+        }
+        else if (day > 32) {
+            return false;
+        }
+        else if ((month == 9 || month == 4 || month == 6 || month == 11) && day > 30) {
+            return false;
+        }
+        else if ((month == 2) && (year%4!=0) && day > 28) {
+            return false;
+        }
+        else if ((month == 2) && (year%4==0) && day > 29) {
+            return false;
+        }
+        else {return true;}
+    }
 
-        String dateString = yearString + "-" + monthString + "-" + dayString;
+    public int encodeMonthDayGender(int year, int month, int day, char genderCode) throws UnknownGenderCodeException, InvalidBirthdayException{
+        //String yearString = Integer.toString(year);
+        //String monthString = Integer.toString(month);
+        //String dayString = Integer.toString(day);
 
         if (genderCode != CODE_MALE && genderCode != CODE_FEMALE ){
             throw new UnknownGenderCodeException(genderCode);
         }
-        //format month/day as date then confirm whether is valid
-        if (GenericValidator.isDate(dateString, "yyyy-MM-dd", true) == true){
+        if (validDate(month, day, year) == false){
             throw new InvalidBirthdayException(year, month, day);
         }
         else
@@ -36,5 +52,4 @@ public class MonthDayGenderUtility {
             }
         }
     }
-
 }

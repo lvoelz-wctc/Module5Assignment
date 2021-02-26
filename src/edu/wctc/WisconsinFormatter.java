@@ -9,8 +9,12 @@ public class WisconsinFormatter implements DriversLicenseFormatter{
         String initialCode = String.valueOf(driversLicense.getFirstNameMiddleInitial());
         String yearCode = String.valueOf(driversLicense.getBirthYear());
         String genderCode = String.valueOf(driversLicense.getBirthMonthDayGender());
+        String overflow = String.valueOf(driversLicense.getOverflow());
 
-        String driversLicenseNumber = soundexCode+"-"+initialCode+"-"+yearCode+"-"+genderCode+"0";
+        String yearOne = String.valueOf(yearCode.charAt(0));
+        String yearTwo = String.valueOf(yearCode.charAt(1));
+
+        String driversLicenseNumber = soundexCode+"-"+initialCode+yearOne+"-"+yearTwo+genderCode+"-"+overflow+"0";
 
         return driversLicenseNumber;
     }
